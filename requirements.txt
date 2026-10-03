@@ -1,0 +1,4 @@
+openai>=1.40
+httpx
+# Optional: only for the completions-API fallback (applies the model chat template)
+# transformers

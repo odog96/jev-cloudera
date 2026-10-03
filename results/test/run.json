@@ -1,0 +1,9 @@
+{
+  "model": "Qwen/Qwen2.5-7B-Instruct",
+  "claims": "data/claims_test.jsonl",
+  "questions": "data/questions.json",
+  "question_text": {
+    "team": "Which team should handle this claim? Only if the note clearly fits more than one team, prefer fraud review, then coverage questions, then injury claims.",
+    "senior_review": "Should a senior adjuster review this claim before any payment?"
+  }
+}

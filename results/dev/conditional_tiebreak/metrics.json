@@ -1,0 +1,125 @@
+{
+  "n_claims": 300,
+  "questions": {
+    "team": {
+      "overall": {
+        "n": 300,
+        "accuracy": 0.88,
+        "balanced_accuracy": 0.8935624954818189
+      },
+      "easy": {
+        "n": 200,
+        "accuracy": 0.965,
+        "balanced_accuracy": 0.9639285714285715
+      },
+      "hard": {
+        "n": 100,
+        "accuracy": 0.71,
+        "balanced_accuracy": 0.7486842105263158
+      },
+      "hard_by_scenario": {
+        "hard_angry_small": {
+          "n": 10,
+          "accuracy": 0.4,
+          "balanced_accuracy": 0.4
+        },
+        "hard_distractor_coverage": {
+          "n": 10,
+          "accuracy": 0.6,
+          "balanced_accuracy": 0.6
+        },
+        "hard_line_items_over": {
+          "n": 8,
+          "accuracy": 0.25,
+          "balanced_accuracy": 0.25
+        },
+        "hard_new_policy_genuine": {
+          "n": 10,
+          "accuracy": 0.8,
+          "balanced_accuracy": 0.8
+        },
+        "hard_passing_injury": {
+          "n": 12,
+          "accuracy": 0.25,
+          "balanced_accuracy": 0.25
+        },
+        "hard_small_attorney": {
+          "n": 6,
+          "accuracy": 1.0,
+          "balanced_accuracy": 1.0
+        },
+        "hard_subtle_coverage": {
+          "n": 10,
+          "accuracy": 0.8,
+          "balanced_accuracy": 0.8
+        },
+        "hard_subtle_fraud": {
+          "n": 10,
+          "accuracy": 1.0,
+          "balanced_accuracy": 1.0
+        },
+        "hard_two_teams_coverage_injury": {
+          "n": 9,
+          "accuracy": 1.0,
+          "balanced_accuracy": 1.0
+        },
+        "hard_two_teams_fraud_injury": {
+          "n": 8,
+          "accuracy": 1.0,
+          "balanced_accuracy": 1.0
+        },
+        "hard_unrelated_injury": {
+          "n": 7,
+          "accuracy": 1.0,
+          "balanced_accuracy": 1.0
+        }
+      },
+      "permuted_order_accuracy": {
+        "n": 300,
+        "accuracy": 0.88,
+        "balanced_accuracy": 0.8516528259717102
+      },
+      "order_flip_rate": 0.09333333333333334,
+      "order_flips": 28,
+      "order_check": "shuffled, every option moved",
+      "calibration": {
+        "fit_n": 150,
+        "test_n": 150,
+        "temperature": 4.780646567194548,
+        "ece_before": 0.15141901594220353,
+        "ece_after": 0.05815241416924388,
+        "nll_before": 1.7324953688243014,
+        "nll_after": 0.4952765179540222
+      },
+      "chosen_prob_histogram": {
+        "<0.5": 1,
+        "0.5-0.6": 2,
+        "0.6-0.7": 3,
+        "0.7-0.8": 3,
+        "0.8-0.9": 4,
+        "0.9-0.99": 21,
+        "0.99-1.0": 266
+      },
+      "chosen_prob_histogram_test_after_scaling": {
+        "<0.5": 2,
+        "0.5-0.6": 5,
+        "0.6-0.7": 10,
+        "0.7-0.8": 11,
+        "0.8-0.9": 19,
+        "0.9-0.99": 103,
+        "0.99-1.0": 0
+      },
+      "coverage": {
+        "min": 0.9999938780900787,
+        "mean": 0.999999970646514,
+        "below_0.9": 0,
+        "no_choice": 0
+      }
+    }
+  },
+  "model": "Qwen/Qwen2.5-7B-Instruct",
+  "claims": "data/claims_dev.jsonl",
+  "question_text": {
+    "team": "Which team should handle this claim? Only if the note clearly fits more than one team, prefer fraud review, then coverage questions, then injury claims."
+  }
+}

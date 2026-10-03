@@ -1,0 +1,9 @@
+{
+  "model": "Qwen/Qwen2.5-7B-Instruct",
+  "claims": "data/claims_dev.jsonl",
+  "questions": "results/dev/tiebreak/questions.json",
+  "question_text": {
+    "team": "Which team should handle this claim? If more than one team fits, fraud review takes priority, then coverage questions, then injury claims.",
+    "senior_review": "Should a senior adjuster review this claim before any payment?"
+  }
+}

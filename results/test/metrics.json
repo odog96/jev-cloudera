@@ -1,0 +1,241 @@
+{
+  "n_claims": 300,
+  "questions": {
+    "team": {
+      "overall": {
+        "n": 300,
+        "accuracy": 0.8766666666666667,
+        "balanced_accuracy": 0.8805657967661871
+      },
+      "easy": {
+        "n": 200,
+        "accuracy": 0.935,
+        "balanced_accuracy": 0.9210714285714285
+      },
+      "hard": {
+        "n": 100,
+        "accuracy": 0.76,
+        "balanced_accuracy": 0.7945906432748537
+      },
+      "hard_by_scenario": {
+        "hard_angry_small": {
+          "n": 10,
+          "accuracy": 0.7,
+          "balanced_accuracy": 0.7
+        },
+        "hard_distractor_coverage": {
+          "n": 10,
+          "accuracy": 0.6,
+          "balanced_accuracy": 0.6
+        },
+        "hard_line_items_over": {
+          "n": 8,
+          "accuracy": 0.375,
+          "balanced_accuracy": 0.375
+        },
+        "hard_new_policy_genuine": {
+          "n": 10,
+          "accuracy": 0.7,
+          "balanced_accuracy": 0.7
+        },
+        "hard_passing_injury": {
+          "n": 12,
+          "accuracy": 0.5833333333333334,
+          "balanced_accuracy": 0.5833333333333334
+        },
+        "hard_small_attorney": {
+          "n": 6,
+          "accuracy": 1.0,
+          "balanced_accuracy": 1.0
+        },
+        "hard_subtle_coverage": {
+          "n": 10,
+          "accuracy": 0.6,
+          "balanced_accuracy": 0.6
+        },
+        "hard_subtle_fraud": {
+          "n": 10,
+          "accuracy": 1.0,
+          "balanced_accuracy": 1.0
+        },
+        "hard_two_teams_coverage_injury": {
+          "n": 9,
+          "accuracy": 1.0,
+          "balanced_accuracy": 1.0
+        },
+        "hard_two_teams_fraud_injury": {
+          "n": 8,
+          "accuracy": 1.0,
+          "balanced_accuracy": 1.0
+        },
+        "hard_unrelated_injury": {
+          "n": 7,
+          "accuracy": 1.0,
+          "balanced_accuracy": 1.0
+        }
+      },
+      "permuted_order_accuracy": {
+        "n": 300,
+        "accuracy": 0.9,
+        "balanced_accuracy": 0.8739570531820045
+      },
+      "order_flip_rate": 0.07,
+      "order_flips": 21,
+      "order_check": "shuffled, every option moved",
+      "calibration": {
+        "fit_n": 150,
+        "test_n": 150,
+        "temperature": 5.502115069212841,
+        "ece_before": 0.12958985801725717,
+        "ece_after": 0.03258376221785597,
+        "nll_before": 1.6662320702172826,
+        "nll_after": 0.4749369780907455
+      },
+      "chosen_prob_histogram": {
+        "<0.5": 1,
+        "0.5-0.6": 0,
+        "0.6-0.7": 3,
+        "0.7-0.8": 2,
+        "0.8-0.9": 9,
+        "0.9-0.99": 13,
+        "0.99-1.0": 272
+      },
+      "chosen_prob_histogram_test_after_scaling": {
+        "<0.5": 7,
+        "0.5-0.6": 7,
+        "0.6-0.7": 5,
+        "0.7-0.8": 7,
+        "0.8-0.9": 53,
+        "0.9-0.99": 71,
+        "0.99-1.0": 0
+      },
+      "coverage": {
+        "min": 0.9999954597182148,
+        "mean": 0.9999999559133996,
+        "below_0.9": 0,
+        "no_choice": 0
+      }
+    },
+    "senior_review": {
+      "overall": {
+        "n": 300,
+        "accuracy": 0.8733333333333333,
+        "balanced_accuracy": 0.8222482560306725
+      },
+      "easy": {
+        "n": 200,
+        "accuracy": 0.905,
+        "balanced_accuracy": 0.8702613176297387
+      },
+      "hard": {
+        "n": 100,
+        "accuracy": 0.81,
+        "balanced_accuracy": 0.7362132352941176
+      },
+      "hard_by_scenario": {
+        "hard_angry_small": {
+          "n": 10,
+          "accuracy": 0.6,
+          "balanced_accuracy": 0.6
+        },
+        "hard_distractor_coverage": {
+          "n": 10,
+          "accuracy": 1.0,
+          "balanced_accuracy": 1.0
+        },
+        "hard_line_items_over": {
+          "n": 8,
+          "accuracy": 1.0,
+          "balanced_accuracy": 1.0
+        },
+        "hard_new_policy_genuine": {
+          "n": 10,
+          "accuracy": 1.0,
+          "balanced_accuracy": 1.0
+        },
+        "hard_passing_injury": {
+          "n": 12,
+          "accuracy": 1.0,
+          "balanced_accuracy": 1.0
+        },
+        "hard_small_attorney": {
+          "n": 6,
+          "accuracy": 0.3333333333333333,
+          "balanced_accuracy": 0.3333333333333333
+        },
+        "hard_subtle_coverage": {
+          "n": 10,
+          "accuracy": 1.0,
+          "balanced_accuracy": 1.0
+        },
+        "hard_subtle_fraud": {
+          "n": 10,
+          "accuracy": 0.1,
+          "balanced_accuracy": 0.1
+        },
+        "hard_two_teams_coverage_injury": {
+          "n": 9,
+          "accuracy": 1.0,
+          "balanced_accuracy": 1.0
+        },
+        "hard_two_teams_fraud_injury": {
+          "n": 8,
+          "accuracy": 0.75,
+          "balanced_accuracy": 0.75
+        },
+        "hard_unrelated_injury": {
+          "n": 7,
+          "accuracy": 1.0,
+          "balanced_accuracy": 1.0
+        }
+      },
+      "permuted_order_accuracy": {
+        "n": 300,
+        "accuracy": 0.9,
+        "balanced_accuracy": 0.8736886948186804
+      },
+      "order_flip_rate": 0.04,
+      "order_flips": 12,
+      "order_check": "reversed",
+      "calibration": {
+        "fit_n": 150,
+        "test_n": 150,
+        "temperature": 4.0181619495378,
+        "ece_before": 0.11886304021826638,
+        "ece_after": 0.03525935486089594,
+        "nll_before": 0.7035241923947236,
+        "nll_after": 0.31581107955078486
+      },
+      "chosen_prob_histogram": {
+        "<0.5": 0,
+        "0.5-0.6": 4,
+        "0.6-0.7": 3,
+        "0.7-0.8": 8,
+        "0.8-0.9": 5,
+        "0.9-0.99": 33,
+        "0.99-1.0": 247
+      },
+      "chosen_prob_histogram_test_after_scaling": {
+        "<0.5": 0,
+        "0.5-0.6": 10,
+        "0.6-0.7": 9,
+        "0.7-0.8": 16,
+        "0.8-0.9": 24,
+        "0.9-0.99": 90,
+        "0.99-1.0": 1
+      },
+      "coverage": {
+        "min": 0.9959295166896578,
+        "mean": 0.9995621322515209,
+        "below_0.9": 0,
+        "no_choice": 0
+      }
+    }
+  },
+  "model": "Qwen/Qwen2.5-7B-Instruct",
+  "claims": "data/claims_test.jsonl",
+  "question_text": {
+    "team": "Which team should handle this claim? Only if the note clearly fits more than one team, prefer fraud review, then coverage questions, then injury claims.",
+    "senior_review": "Should a senior adjuster review this claim before any payment?"
+  }
+}

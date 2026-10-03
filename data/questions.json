@@ -1,0 +1,36 @@
+{
+  "team": {
+    "question": "Which team should handle this claim? Only if the note clearly fits more than one team, prefer fraud review, then coverage questions, then injury claims.",
+    "options": [
+      {
+        "id": "standard",
+        "description": "Standard claims handling: routine vehicle or property damage, no injury, no red flags."
+      },
+      {
+        "id": "injury",
+        "description": "Injury claims: anyone hurt, medical treatment mentioned, or an attorney involved."
+      },
+      {
+        "id": "fraud_review",
+        "description": "Fraud review: details suggest the claim may not be genuine, such as a policy bought days before the loss, inconsistent accounts, or prior similar claims."
+      },
+      {
+        "id": "coverage",
+        "description": "Coverage questions: unclear whether the policy covers this loss, such as a lapsed policy, an excluded driver, or flood damage on a policy without flood cover."
+      }
+    ]
+  },
+  "senior_review": {
+    "question": "Should a senior adjuster review this claim before any payment?",
+    "options": [
+      {
+        "id": "yes",
+        "description": "Yes, send to a senior adjuster: possible fraud, an attorney is already involved, or the estimated loss is $25,000 or more."
+      },
+      {
+        "id": "no",
+        "description": "No, normal handling: none of those apply."
+      }
+    ]
+  }
+}

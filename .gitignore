@@ -1,0 +1,17 @@
+R
+node_modules
+*.pyc
+__pycache__
+# Dot-files and dot-folders stay local (.claude/, .claude.json, .cache, .local, ...)
+.*
+!.gitignore
+!.project-metadata.yaml
+!.experiments
+# Local working files, never pushed
+CLAUDE.md
+CLAUDE.local.md
+.claude/
+docs/PLAN_*.md
+docs/JOURNAL.md
+Untitled*.ipynb
+# <reply-rules file, name to come>

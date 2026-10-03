@@ -1,0 +1,8 @@
+{
+  "model": "Qwen/Qwen2.5-7B-Instruct",
+  "claims": "data/claims_dev.jsonl",
+  "questions": "eval/variants/no_tiebreak.json",
+  "question_text": {
+    "team": "Which team should handle this claim?"
+  }
+}
