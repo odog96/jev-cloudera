@@ -13,5 +13,6 @@ CLAUDE.local.md
 .claude/
 docs/PLAN_*.md
 docs/JOURNAL.md
+docs/REVIEW_FOR_ME.md
 Untitled*.ipynb
 # <reply-rules file, name to come>
