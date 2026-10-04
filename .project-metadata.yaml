@@ -1,0 +1,76 @@
+name: Jev-style decisions on Cloudera AI
+description: >-
+  Turns one standard OpenAI-compatible chat-completions call to Cloudera AI
+  Inference Service into option probabilities: one output token plus the top-20
+  log-probabilities, read as the scores of the option letters. The example
+  routes synthetic insurance claim notes (which team; senior review yes/no) in a
+  small Streamlit application. No custom serving code; the same code runs on
+  public and private cloud, configured by environment variables only.
+author: "Cloudera"
+date: "2026-10-04"
+specification_version: 1.0
+prototype_version: 1.0
+
+environment_variables:
+  CAI_BASE_URL:
+    default: ""
+    description: >-
+      The OpenAI-compatible base URL of your Cloudera AI Inference Service
+      endpoint, ending in /v1 (from the endpoint's details page). Deploy the
+      model endpoint by hand in the Inference Service UI first; this project
+      does not deploy it.
+    required: true
+
+  CAI_MODEL:
+    default: "Qwen/Qwen2.5-7B-Instruct"
+    description: >-
+      The model id the endpoint expects. The results in this project are for
+      Qwen/Qwen2.5-7B-Instruct.
+    required: true
+
+  CAI_TOKEN:
+    default: ""
+    description: >-
+      Optional. A CDP access token (JWT) for the endpoint. Leave empty inside
+      Cloudera AI Workbench, where the token is read from /tmp/jwt.
+    required: false
+
+  CAI_CA_BUNDLE:
+    default: ""
+    description: >-
+      Optional. Path to a private-cloud CA certificate file, if the endpoint's
+      certificate is not trusted by default.
+    required: false
+
+runtimes:
+  # No `version:`, as in Cloudera's own AMPs: a runtime block that matches
+  # nothing stops the AMP before it writes any log. Python 3.12 is the Python
+  # this project was built and tested on.
+  - editor: PBJ Workbench
+    kernel: Python 3.12
+    edition: Standard
+
+tasks:
+  - type: run_session
+    name: Install dependencies
+    script: scripts/amp_install_dependencies.py
+    short_summary: Installing Python dependencies
+    kernel: python3
+    cpu: 1
+    memory: 2
+
+  - type: start_application
+    name: Claim triage
+    entity_label: claim_triage
+    subdomain: claim-triage
+    script: launch_app.py
+    kernel: python3
+    short_summary: Starting the claim triage application
+    long_summary: >-
+      Starts the Streamlit application: paste a claim note, pick a question, and
+      see each option's calibrated probability (raw model scores on a switch),
+      the coverage, and that one request's latency.
+    cpu: 1
+    memory: 2
+    environment_variables:
+      TASK_TYPE: START_APPLICATION
