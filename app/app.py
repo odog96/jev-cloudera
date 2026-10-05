@@ -36,6 +36,13 @@ CHOICES = {"Both": ["team", "senior_review"], "Team": ["team"],
            "Senior review": ["senior_review"]}
 EXAMPLES_PER_PAGE = 8
 FOOTER = "All claim notes are invented for this demo; no real customer data."
+# Neutral example titles: the incident only, never the team, a red flag or the answer.
+EXAMPLE_TITLES = {
+    "claim-001": "Low-speed rear-end collision", "claim-002": "Incident on icy front steps",
+    "claim-003": "Crash in the insured's SUV", "claim-005": "Parking-lot scrape",
+    "claim-006": "Garage fire", "claim-007": "Laundry-room water leak",
+    "claim-008": "Rear-end collision", "claim-011": "Home theft",
+}
 
 
 @st.cache_data
@@ -59,10 +66,17 @@ except (OSError, KeyError, RuntimeError) as e:
     st.stop()
 
 st.title("Claim triage")
+st.write("Paste a first-notice-of-loss claim note (the note written when a customer "
+         "first reports a claim).")
+st.write("The model answers two questions: which team should handle the claim, and "
+         "whether a senior adjuster should review it before any payment. "
+         "All notes here are invented.")
 
 # --- Input ---
 ex = examples()
-labels = ["(write your own)"] + [f"{c['id']} — {c['scenario']}" for c in ex]
+labels = ["(write your own)"] + [
+    f"Example {n}: {EXAMPLE_TITLES[c['id']]}" if c["id"] in EXAMPLE_TITLES else f"Example {n}"
+    for n, c in enumerate(ex, 1)]
 
 
 def _load_example():
@@ -71,7 +85,7 @@ def _load_example():
     st.session_state.pop("results", None)
 
 
-st.selectbox("Load an example (synthetic development notes)", labels,
+st.selectbox("Load an invented example note", labels,
              key="example", on_change=_load_example)
 note = st.text_area("Claim note", key="note", height=140)
 left, right = st.columns([2, 1])
@@ -81,7 +95,8 @@ with right:
     threshold = st.slider("Automation threshold", min_value=50, max_value=99, value=80,
                           format="%d%%", key="threshold")
     st.caption("Demo setting: answers at or above this confidence are routed "
-               "automatically; the rest go to a person.")
+               "automatically, unless the model's answer did not fit the options; "
+               "the rest go to a person.")
 
 if st.button("Score this note", type="primary"):
     if not note.strip():
@@ -116,8 +131,10 @@ if results:
                            "send to a person to review.")
                 continue
             cal = calibrated(pred, temperatures[key]["temperature"])
-            st.subheader(headline(QUESTION_LABELS[key], options[pred.choice], cal[pred.choice]))
-            automatic, action = recommended_action(cal[pred.choice], threshold)
+            st.subheader(headline(QUESTION_LABELS[key], options[pred.choice], cal[pred.choice],
+                                  pred.coverage))
+            automatic, action = recommended_action(key, options[pred.choice], cal[pred.choice],
+                                                   pred.coverage, threshold)
             (st.success if automatic else st.warning)(action)
             st.markdown("**How confident the model is in each option**")
             for oid, opt in options.items():
@@ -129,6 +146,7 @@ if results:
             if example:
                 st.caption("Correct answer in the demo data: "
                            f"{short_label(options[example[key]])}")
+    st.caption("Confidence was tuned on invented demo notes and may not hold on real claims.")
 
 # --- Technical details (collapsed) ---
 with st.expander("Technical details", expanded=False):
