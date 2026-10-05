@@ -1,8 +1,134 @@
 # Jev-style decisions on Cloudera AI
 
-A small demo of Jev-style decisions on Cloudera AI. It turns one standard
-OpenAI-compatible chat-completions call to **Cloudera AI Inference Service** into
-probabilities over a fixed set of options. You give it a piece of text (`state`), a
+Use a large language model to make decisions: give it a piece of text, a question and
+a fixed list of options, and get back a probability for each option. This repository
+shows it on Cloudera AI, routing synthetic insurance claim notes.
+
+## What Jev does on Cloudera AI
+
+You've just deployed your first Jev-style application on Cloudera AI, and today you're
+presenting it to one of your executives and an AI architect.
+
+With all the buzz around Jev, it's easy to miss the basics: what exactly is it, and
+what value can it bring? This fictional conversation is meant to answer both.
+
+### Around the table
+
+**You:** "First, let me explain what Jev is. I think of it as using large language
+models to make decisions. In machine learning terms, it makes categorical
+predictions. To do that with a language model, we frame the question so the model
+chooses from a fixed list of options, and we get its answer back as a probability for
+each option. Jev itself is a hosted service from a company called TypeSafe; what
+we've built follows the same pattern, using an open model on our own platform."
+
+"Now let's turn to how we're using it here. As an insurance company, we take in a
+steady stream of new claims, and each one starts as a short note written when the
+customer first reports the loss. Today, someone on our claims team reads every one of
+those notes to decide which team handles the claim, and whether a senior adjuster
+must review it before any payment. This application makes both decisions
+automatically, with a confidence score for each option. Claims the model is sure
+about can be routed straight through, and uncertain ones go to a person. On a test
+set of synthetic claims, it chose the right team about 88% of the time."
+
+**Executive:** "What's the value? We already have machine learning models, so how is
+this different?"
+
+**You:** "It's about speed, cost and control."
+
+- **Days to start, not months.** A traditional model needs a project to collect and
+  label thousands of past claims before it routes a single one. Here, someone writes
+  down the rules and it starts.
+- **No large labeling project.** A few hundred graded examples to check and calibrate
+  it, not thousands to train it. And it runs on the Cloudera platform we already have.
+- **Rule changes are quick.** Moving the senior-review threshold means editing one
+  sentence and re-running a test, not retraining a model.
+- **One approach, many decisions.** Claims routing today; complaint triage or document
+  review tomorrow.
+- **You decide what's automated.** The confidence score lets you choose where to draw
+  the line between automatic routing and human review.
+
+"Where a mature model already handles a stable decision well, keep it. This is for
+the long list of decisions that never justified a data-science project."
+
+**Executive:** "These notes are full of customer details. Where do they go?"
+
+**You:** "They don't have to go anywhere. Instead of sending them to a SaaS AI
+service, the whole thing can run inside our own Cloudera environment, under the
+security and governance controls we already have."
+
+**Executive:** "I'll be measured on accuracy. How do I know it stays accurate?"
+
+**You:** "In production, we'd log every decision with the rules and the model that
+made it. Each week, claims that people reviewed or sent back as misrouted become the
+correct answers, giving us an accuracy score for every team. Warning signs, like a
+sudden jump in fraud referrals, would show up early."
+
+"When accuracy slips, we can re-tune the confidence scores, move the automation line,
+or reword a rule, and test every change on a fixed set of graded claims before it
+goes live. The model itself doesn't need retraining."
+
+**Architect:** "Let me pick it up from there. Is Jev another model?"
+
+**You:** "No, it's a pattern for how you call a model. You send it text, a question
+and a fixed list of options, and you get back a probability for each option. The
+model writes nothing. We ask the endpoint for one output token, plus its scores for
+the most likely tokens, and read off the scores for the option letters."
+
+![Claim notes never leave your Cloudera environment: the claim triage app and the Jev client library run in Cloudera AI and call Qwen2.5-7B-Instruct on Cloudera AI Inference Service, all inside your Cloudera environment, public cloud or on-premises](docs/images/architecture.jpeg)
+
+The client library is the only Jev-specific part; the model and its endpoint are a
+standard Cloudera AI Inference Service deployment.
+
+**Architect:** "So you built custom model serving?"
+
+**You:** "No. The model, Qwen2.5-7B-Instruct, runs as a standard deployment on
+Cloudera AI Inference Service, behind its usual OpenAI-compatible API. Everything
+Jev-specific lives in a small client library inside the application on Cloudera AI.
+It labels the options, makes the call, turns the scores into probabilities, and
+calibrates them, so that a confidence score tracks how often answers like it are
+right."
+
+**Architect:** "And where does the data go?"
+
+**You:** "From the application to the inference endpoint and back. Both can run
+inside our Cloudera environment, so claim data never has to go to an outside
+service."
+
+**Architect:** "Is this cloud-only?"
+
+**You:** "That's the best part. A single Cloudera AI application can run on public
+cloud or on-premises, and that holds for this one too. Switching between them is
+easy: a few settings change, not the code."
+
+**Architect:** "Can my team try it?"
+
+**You:** "Yes. Start with the walkthrough notebook in the repository. It goes through
+the library step by step, with nothing abstracted away, so you can see exactly what
+goes in and what comes out. Then deploy the full application."
+
+*The 88% is the team-question accuracy on the synthetic test set (0.877,
+`results/test/summary.md`); the calibration error is under Results. All claim notes
+are invented; see [Results](#results) and [Limitations](#limitations).*
+
+## Ready to deploy?
+
+The whole application is packaged as a Cloudera AMP, so you can run it in four steps:
+
+1. Deploy a model on Cloudera AI Inference Service. We tested with
+   Qwen2.5-7B-Instruct.
+2. In Cloudera AI, create a project from the AMP in this repository.
+3. In the project settings, set the endpoint address (`CAI_BASE_URL`) and the model
+   name (`CAI_MODEL`).
+4. Open the Claim triage application and paste in a claim note.
+
+The sections below cover the details. Start with the walkthrough notebook,
+[`notebooks/quickstart.ipynb`](notebooks/quickstart.ipynb): one question, four
+options, the exact request, the raw response and how it is read.
+
+## How it works
+
+The client turns one standard OpenAI-compatible chat-completions call to
+**Cloudera AI Inference Service** into probabilities over a fixed set of options. You give it a piece of text (`state`), a
 `question` and a list of `options`. It asks the endpoint for exactly **one output
 token** plus the **top-20 log-probabilities**, then reads the scores of the option
 letters (A, B, C, …). There is no custom serving code: any model endpoint that
@@ -50,14 +176,21 @@ against a model it hosts itself. Nothing is sent to an outside model service.
 > **[SCREENSHOT PLACEHOLDER: the claim triage page with an example note scored for
 > both questions]**
 
-Paste a claim note, or load one of the synthetic development notes, then choose a
+Paste a claim note, or load one of the invented example notes, then choose a
 question: Team, Senior review or Both. For each question the page shows:
 
-- each option's probability, **calibrated** by default, with a switch that also
-  shows the **raw model scores**;
-- the chosen option;
-- the **coverage**;
-- the latency of that one request ("this endpoint, this request").
+- the answer in plain words with its **calibrated** confidence, for example "Team:
+  Injury claims, 82% confident";
+- a recommended action: route automatically (naming where the claim goes) if the
+  confidence is at or above the **automation threshold**, a demo slider from 50% to
+  99% (default 80%), otherwise send to a person; if coverage is below 0.95 the claim
+  always goes to a person;
+- a bar per option, "How confident the model is in each option".
+
+A collapsed **Technical details** section shows the model and endpoint status, the
+calibration temperatures and their source runs, a switch for the **raw model
+scores**, and each question's coverage and the latency of that one request ("this
+endpoint, this request").
 
 Calibration rescales the raw scores with one temperature per question. The
 temperatures were fitted on half of the development notes and are read from the
@@ -191,7 +324,7 @@ Source: `results/dev/wording_comparison.md`.
 | `jev/client.py` | `predict(state, question, options)`: one call, option probabilities, coverage |
 | `jev/calibrate.py` | temperature scaling and calibration error |
 | `app/triage.py`, `app/app.py` | both questions for one note; the Streamlit page |
-| `notebooks/walkthrough.ipynb` | step-by-step walkthrough of the library, with saved outputs |
+| `notebooks/quickstart.ipynb` | bare-bones walkthrough: one question, four options, the request, the raw response and how it is read (saved outputs) |
 | `launch_app.py` | Workbench Application startup script |
 | `data/` | questions and synthetic claim notes (development and test) |
 | `eval/` | evaluation and run comparison |

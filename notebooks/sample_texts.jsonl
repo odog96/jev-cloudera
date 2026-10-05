@@ -1,0 +1,10 @@
+{"id": "text-01", "text": "Leaders of three neighbouring countries met in the coastal city of Port Avalen to sign a water-sharing treaty after two years of border talks.", "label": "world", "mixed": false}
+{"id": "text-02", "text": "The Riverton Hawks came back from two goals down to win the regional cup final 3-2, with the winning goal scored in the last minute of extra time.", "label": "sports", "mixed": false}
+{"id": "text-03", "text": "A mid-sized furniture maker reported a 12% rise in quarterly profit and said it would open two new factories next year to meet demand.", "label": "business", "mixed": false}
+{"id": "text-04", "text": "Researchers built a battery cell from sodium and iron that kept 90% of its capacity after 5,000 charge cycles in laboratory tests.", "label": "sci_tech", "mixed": false}
+{"id": "text-05", "text": "Thousands of people were moved to shelters as floods spread across the northern provinces, and the government asked neighbouring states for emergency aid.", "label": "world", "mixed": false}
+{"id": "text-06", "text": "The national tennis champion withdrew from next week's open with a wrist injury, ending her hopes of a third straight title.", "label": "sports", "mixed": false}
+{"id": "text-07", "text": "Central bank officials held interest rates steady and warned that shipping costs could push consumer prices higher through the spring.", "label": "business", "mixed": false}
+{"id": "text-08", "text": "A new open-source tool lets programmers find memory leaks in their code by replaying a program's execution step by step.", "label": "sci_tech", "mixed": false}
+{"id": "text-09", "text": "The owners of the Riverton Hawks agreed to sell the football club to an investment group, valuing the team and its stadium at 400 million.", "label": "business", "mixed": true}
+{"id": "text-10", "text": "Two governments agreed to jointly fund a weather satellite, which will be built by a university lab and launched in three years.", "label": "sci_tech", "mixed": true}
