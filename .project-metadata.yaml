@@ -13,15 +13,15 @@ prototype_version: 1.0
 
 environment_variables:
   CAI_BASE_URL:
-    default: ""
+    # A placeholder rather than "": the AMP form did not pick up a value pasted
+    # into an empty field. The app refuses the placeholder with a clear message.
+    default: "https://YOUR-ENDPOINT/openai/v1"
     description: >-
-      The OpenAI-compatible base URL of your Cloudera AI Inference Service
-      endpoint, ending in /v1 (from the endpoint's details page). Deploy the
-      model endpoint by hand in the Inference Service UI first; this project
-      does not deploy it. Not marked required, so the deployment can finish
-      without it; if left empty here, set it afterwards in Project Settings ->
-      Advanced and restart the application.
-    required: false
+      Replace the placeholder with the OpenAI-compatible base URL of your
+      Cloudera AI Inference Service endpoint, ending in /v1 (from the
+      endpoint's details page). Deploy the model endpoint by hand in the
+      Inference Service UI first; this project does not deploy it.
+    required: true
 
   CAI_MODEL:
     default: "Qwen/Qwen2.5-7B-Instruct"

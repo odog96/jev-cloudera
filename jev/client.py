@@ -62,11 +62,18 @@ class Prediction:
     top_logprobs: dict = field(default_factory=dict)  # raw {token: logprob} for that token
 
 
+PLACEHOLDER_HOST = "YOUR-ENDPOINT"  # default in .project-metadata.yaml
+
+
 def load_config():
     """Read endpoint settings from environment variables."""
     missing = [k for k in ("CAI_BASE_URL", "CAI_MODEL") if not os.environ.get(k)]
     if missing:
         raise RuntimeError("Missing environment variables: " + ", ".join(missing))
+    if PLACEHOLDER_HOST in os.environ["CAI_BASE_URL"]:
+        raise RuntimeError("CAI_BASE_URL is still the placeholder from .project-metadata.yaml; "
+                           "set your endpoint's URL in Project Settings -> Advanced and "
+                           "restart the application.")
     token = os.environ.get("CAI_TOKEN")
     if not token:
         try:

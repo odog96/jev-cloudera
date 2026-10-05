@@ -27,7 +27,7 @@ sys.path.insert(0, str(_PROJECT_ROOT))
 
 from app.presentation import headline, percent, recommended_action, short_label  # noqa: E402
 from app.triage import ask, calibrated, load_questions, load_temperatures  # noqa: E402
-from jev.client import load_config, make_client  # noqa: E402
+from jev.client import PLACEHOLDER_HOST, load_config, make_client  # noqa: E402
 
 st.set_page_config(page_title="Claim triage on Cloudera AI", layout="wide")
 
@@ -152,7 +152,9 @@ if results:
 with st.expander("Technical details", expanded=False):
     st.markdown("**Endpoint**")
     st.write(f"Model: `{os.environ.get('CAI_MODEL') or 'not set'}`")
-    st.write("CAI_BASE_URL: " + ("set" if os.environ.get("CAI_BASE_URL") else "**not set**"))
+    base_url = os.environ.get("CAI_BASE_URL", "")
+    st.write("CAI_BASE_URL: " + ("**still the placeholder**" if PLACEHOLDER_HOST in base_url
+                                 else "set" if base_url else "**not set**"))
     st.caption("Configured by environment variables in Project Settings. "
                "The endpoint is deployed by hand in Cloudera AI Inference Service.")
 

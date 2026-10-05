@@ -206,8 +206,9 @@ those runs. Calibration changes the confidence, never the chosen option.
    This project does not automate it. The results below are for
    Qwen/Qwen2.5-7B-Instruct.
 2. **Set environment variables** in Project Settings → Advanced. When you deploy
-   from `.project-metadata.yaml`, you are asked for them; if the deployment does
-   not pick up `CAI_BASE_URL`, set it here afterwards and restart the application.
+   from `.project-metadata.yaml`, you are asked for them: replace the
+   `CAI_BASE_URL` placeholder with your endpoint's URL. If the app says the URL is
+   still the placeholder, set it here and restart the application.
    - `CAI_BASE_URL`: the endpoint's OpenAI-compatible base URL, ending in `/v1`.
    - `CAI_MODEL`: the model id, for example `Qwen/Qwen2.5-7B-Instruct`.
    - Optional:

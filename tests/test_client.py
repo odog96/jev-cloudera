@@ -150,6 +150,12 @@ class LoadConfigTest(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, "CAI_BASE_URL, CAI_MODEL"):
                 jc.load_config()
 
+    def test_placeholder_url_refused(self):
+        env = {"CAI_BASE_URL": "https://YOUR-ENDPOINT/openai/v1", "CAI_MODEL": "m", "CAI_TOKEN": "t"}
+        with mock.patch.dict(os.environ, env, clear=True):
+            with self.assertRaisesRegex(RuntimeError, "placeholder"):
+                jc.load_config()
+
 
 if __name__ == "__main__":
     unittest.main()
