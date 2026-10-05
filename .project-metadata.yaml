@@ -18,8 +18,10 @@ environment_variables:
       The OpenAI-compatible base URL of your Cloudera AI Inference Service
       endpoint, ending in /v1 (from the endpoint's details page). Deploy the
       model endpoint by hand in the Inference Service UI first; this project
-      does not deploy it.
-    required: true
+      does not deploy it. Not marked required, so the deployment can finish
+      without it; if left empty here, set it afterwards in Project Settings ->
+      Advanced and restart the application.
+    required: false
 
   CAI_MODEL:
     default: "Qwen/Qwen2.5-7B-Instruct"
