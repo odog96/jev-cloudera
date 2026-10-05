@@ -191,6 +191,7 @@ Source: `results/dev/wording_comparison.md`.
 | `jev/client.py` | `predict(state, question, options)`: one call, option probabilities, coverage |
 | `jev/calibrate.py` | temperature scaling and calibration error |
 | `app/triage.py`, `app/app.py` | both questions for one note; the Streamlit page |
+| `notebooks/walkthrough.ipynb` | step-by-step walkthrough of the library, with saved outputs |
 | `launch_app.py` | Workbench Application startup script |
 | `data/` | questions and synthetic claim notes (development and test) |
 | `eval/` | evaluation and run comparison |
