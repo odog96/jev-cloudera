@@ -122,7 +122,7 @@ The whole application is packaged as a Cloudera AMP, so you can run it in four s
 4. Open the Claim triage application and paste in a claim note.
 
 The sections below cover the details. Start with the walkthrough notebook,
-[`notebooks/quickstart.ipynb`](notebooks/quickstart.ipynb): one question, four
+[`quickstart.ipynb`](quickstart.ipynb): one question, four
 options, the exact request, the raw response and how it is read.
 
 ## How it works
@@ -324,9 +324,9 @@ Source: `results/dev/wording_comparison.md`.
 | `jev/client.py` | `predict(state, question, options)`: one call, option probabilities, coverage |
 | `jev/calibrate.py` | temperature scaling and calibration error |
 | `app/triage.py`, `app/app.py` | both questions for one note; the Streamlit page |
-| `notebooks/quickstart.ipynb` | bare-bones walkthrough: one question, four options, the request, the raw response and how it is read (saved outputs) |
+| `quickstart.ipynb` | bare-bones walkthrough: one question, four options, the request, the raw response and how it is read (saved outputs) |
 | `launch_app.py` | Workbench Application startup script |
-| `data/` | questions and synthetic claim notes (development and test) |
+| `data/` | questions, synthetic claim notes (development and test), and the quickstart's 10 sample texts |
 | `eval/` | evaluation and run comparison |
 | `results/` | saved runs; every number above comes from here |
 | `scripts/` | data generation, endpoint check, dependency install |
